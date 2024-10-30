@@ -1,17 +1,26 @@
 import express from 'express';
 import cors from 'cors';
-import helloRoute from './routes/taskRoute'; // Reittitiedosto tuodaan käyttöön
+import helloRoute from './routes/taskRoute';
+import connectWithRetry from './config/db';
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Määritetään CORS-asetukset
+//määritetään CORS-asetukset
 app.use(cors({
-  origin: 'http://localhost:5173', // Frontendin osoite
-  methods: ['GET', 'POST'], // Sallitut HTTP-metodit
+  origin: 'http://localhost:5173', //frontendin osoite
+  methods: ['GET', 'POST'], //sallitut HTTP-metodit
 }));
 
-// Lisätään reitit
+//lisätään reitit
 app.use('/api', helloRoute);
 
-// Exportataan app, jotta sitä voidaan käyttää muissa tiedostoissa
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  
+  //kutsutaan MongoDB-yhteysfunktiota kun palvelin on luotu
+  connectWithRetry();
+});
+
+//exportataan app, jotta sitä voidaan käyttää muissa tiedostoissa
 export default app;
