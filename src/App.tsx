@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
    return (
      <div className="min-h-screen bg-base-100 flex items-center justify-center">
        <div className="text-center">
-         <h1 className="text-4xl font-bold">React + Express Demo</h1>
+         <h1 className="text-4xl font-bold">WhatToDo?</h1>
          <p className="mt-4">{message}</p>
        </div>
      </div>

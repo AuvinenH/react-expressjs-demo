@@ -11,14 +11,15 @@
     "start": "nodemon src/index.ts"
   },
   "dependencies": {
+    "axios": "^1.7.7",
     "daisyui": "^4.12.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
+    "@types/cors": "^2.8.17",
     "@types/react": "^18.3.10",
-    "@types/cors":"^2.8.17",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
