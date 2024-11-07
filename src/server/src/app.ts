@@ -22,5 +22,7 @@ app.listen(PORT, () => {
   connectWithRetry();
 });
 
+app.use(express.json()); 
+
 //exportataan app, jotta sitä voidaan käyttää muissa tiedostoissa
 export default app;
