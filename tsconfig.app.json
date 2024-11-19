@@ -20,5 +20,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/server"]
+  "include": ["src", "src/server", "vite.config.ts", "eslint.config.js", "tailwind.config.js", "tsconfig.app.json", "tsconfig.json", "tsconfig.node.json"]
 }

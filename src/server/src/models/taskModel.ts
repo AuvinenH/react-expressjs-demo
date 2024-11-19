@@ -25,8 +25,8 @@ const taskSchema: Schema = new Schema(
     endDate: { type: Date, required: false }, // Task end date
     status: {
       type: String,
-      enum: Object.values(TaskStatusEnum), // Use the enum values
-      default: TaskStatusEnum.NEW, // Set a default status
+      enum: Object.values(TaskStatusEnum), // Use enum values for validation
+      default: TaskStatusEnum.NEW, // Default status is 'new'
     },
   },
   {

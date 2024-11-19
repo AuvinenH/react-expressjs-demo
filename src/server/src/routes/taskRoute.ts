@@ -10,6 +10,6 @@ router.get("/tasks", getTasks);
 router.post("/tasks", createTask);
 
 // Route to delete a task by ID
-router.delete("/tasks/:id", deleteTask); // Correctly specify the HTTP method and the `:id` parameter
+//router.delete("/tasks/:id", deleteTask); // Correctly specify the HTTP method and the `:id` parameter
 
 export default router;

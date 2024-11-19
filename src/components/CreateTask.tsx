@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { createTask } from "../services/apiServices"
-import { Task } from "../models/TaskModels";
+import { createTask } from "../services/apiServices";
+import { Task, TaskStatusEnum } from "../models/TaskModels";
 
 function CreateTask() {
   const [name, setName] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
+  const [status, setStatus] = useState<TaskStatusEnum>(TaskStatusEnum.NEW); // Add status state
   const [message, setMessage] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -14,11 +15,12 @@ function CreateTask() {
 
     try {
       const newTask: Task = {
+        id: "",
         name,
         content,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
-        id: ""
+        startDate: startDate ? new Date(startDate) : null,
+        endDate: endDate ? new Date(endDate) : null,
+        status, // Include the status
       };
       await createTask(newTask);
       setMessage("Task created successfully");
@@ -26,6 +28,7 @@ function CreateTask() {
       setContent("");
       setStartDate("");
       setEndDate("");
+      setStatus(TaskStatusEnum.NEW); // Reset status to default
     } catch (error) {
       setMessage("Failed to create task");
     }
@@ -74,7 +77,7 @@ function CreateTask() {
             className="input input-bordered w-full"
           />
         </div>
-        <div className="form-control mb-6">
+        <div className="form-control mb-4">
           <label className="label">
             <span className="label-text">End Date:</span>
           </label>
@@ -85,6 +88,20 @@ function CreateTask() {
             required
             className="input input-bordered w-full"
           />
+        </div>
+        <div className="form-control mb-6">
+          <label className="label">
+            <span className="label-text">Status:</span>
+          </label>
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value as TaskStatusEnum)}
+            className="select select-bordered w-full"
+          >
+            <option value={TaskStatusEnum.NEW}>New</option>
+            <option value={TaskStatusEnum.IN_PROGRESS}>In Progress</option>
+            <option value={TaskStatusEnum.DONE}>Done</option>
+          </select>
         </div>
         <button type="submit" className="btn btn-primary w-full">
           Create Task
