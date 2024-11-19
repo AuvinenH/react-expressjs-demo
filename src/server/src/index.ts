@@ -1,8 +1,10 @@
-import app from './app'; // Tuodaan alustettu Express-sovellus
+import app from "./app";
+import dotenv from "dotenv";
 
-const PORT = 5000;
+dotenv.config();
 
-// Käynnistetään palvelin
+const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

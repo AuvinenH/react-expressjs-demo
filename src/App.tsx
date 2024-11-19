@@ -1,23 +1,29 @@
-import { useEffect, useState } from 'react';
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Dashboard from "./routes/Dashboard";
+import ErrorPage from "./routes/Errorpage";
+import Root from "./routes/Root";
+import Tasks from "./routes/Tasks";
 
- function App() {
-   const [message, setMessage] = useState<string>('');
- 
-   useEffect(() => {
-     fetch('http://localhost:5000/api/hello')
-       .then(response => response.json())
-       .then(data => setMessage(data.message))
-       .catch(error => console.error('Error fetching data:', error));
-   }, []);
- 
-   return (
-     <div className="min-h-screen bg-base-100 flex items-center justify-center">
-       <div className="text-center">
-         <h1 className="text-4xl font-bold">WhatToDo?</h1>
-         <p className="mt-4">{message}</p>
-       </div>
-     </div>
-   );
- }
- 
- export default App;
+const App = () => {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Root />}>
+            <Route index element={<Dashboard />} />
+            <Route path="tasks" element={<Tasks />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+};
+
+export default App;
+
+/* Erillaisia tyylejä määritellä React komponentteja / funktioita
+  function App() {}
+  const App = () => {}
+  export default function App() {}
+*/

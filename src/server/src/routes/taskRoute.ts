@@ -1,13 +1,15 @@
-import { Router } from 'express';
-import { sayHello } from '../controllers/taskController';
-import { getTasks } from '../controllers/taskController';
-import { createTask } from '../controllers/taskController';
+import { Router } from "express";
+import { createTask, deleteTask, getTasks } from "../controllers/taskController";
 
 const router = Router();
 
-// Määritetään GET-reitti /api/hello ja ohjataan pyyntö controller-funktiolle
-router.get('/hello', sayHello);
-router.get('/tasks', getTasks);
-router.post('/post', createTask)
+// Route to get all tasks
+router.get("/tasks", getTasks);
+
+// Route to create a new task
+router.post("/tasks", createTask);
+
+// Route to delete a task by ID
+router.delete("/tasks/:id", deleteTask); // Correctly specify the HTTP method and the `:id` parameter
 
 export default router;

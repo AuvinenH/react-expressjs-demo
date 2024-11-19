@@ -1,42 +1,41 @@
-import { Request, Response } from 'express';
-import Task from '../models/taskModel';
+import { Request, Response } from "express";
+import Task from "../models/taskModel";
 
-export const sayHello = (req: Request, res: Response) => {
-  res.json({ message: 'Hello from Express!' });
-};
-const exampleTaskList: string[] = ["Task1", "Task2", "Task3", "Task4"];
-
-//määritellään getTasks-funktio joka hakee kaikki tehtävät tietokannasta
+// Existing getTasks function
 export const getTasks = async (req: Request, res: Response) => {
   try {
-    //haetaan kaikki tehtävät Task-mallin avulla
     const tasks = await Task.find();
-    //jos haku onnistuu, palautetaan tehtävät JSON-muodossa ja statuskoodilla 200 (OK)
     res.status(200).json(tasks);
   } catch (error: unknown) {
-    //virheen sattuessa palautetaan virheilmoitus ja statuskoodi 500 (Internal Server Error)
     res.status(500).json({ message: "Could not get tasks from db" });
   }
 };
 
-//createTask-controller joka luo ja tallentaa uuden tehtävän tietokantaan
+// Existing createTask function
 export const createTask = async (req: Request, res: Response) => {
+  const { name, content, startDate, endDate } = req.body;
+
   try {
-    //luodaan uusi newTask-muuttuja käyttäen Task-mallia ja req.body:n tietoja
-    const newTask = new Task({
-      name: req.body.name,
-      content: req.body.content,
-      startDate: req.body.startDate,
-      endDate: req.body.endDate,
-    });
-
-    //tallennetaan newTask MongoDB:hen
-    const savedTask = await newTask.save();
-
-    //palautetaan save-metodin palauttama response eli tallennettu tehtävä
+    const task = new Task({ name, content, startDate, endDate });
+    const savedTask = await task.save();
     res.status(201).json(savedTask);
   } catch (error: unknown) {
-    //käsitellään mahdollinen virhe ja palautetaan virheviesti
-    res.status(500).json({ message: "Could not create task", error });
+    res.status(500).json({ message: "Could not create a new task" });
+  }
+};
+
+export const deleteTask = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const deletedTask = await Task.findByIdAndDelete(id);
+
+    if (!deletedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    res.status(200).json({ message: "Task successfully deleted", deletedTask });
+  } catch (error: unknown) {
+    res.status(500).json({ message: "Could not delete the task" });
   }
 };
